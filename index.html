@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GradROI — Study Abroad ROI Calculator</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg:#0a0a0f;--bg2:#111118;--bg3:#18181f;--bg4:#1e1e28;
+    --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);
+    --text:#f0f0f5;--text2:#9090a8;--text3:#5a5a72;
+    --accent:#7c6af7;--accent2:#5b4de0;--accent-glow:rgba(124,106,247,0.15);
+    --green:#22c78a;--green-bg:rgba(34,199,138,0.1);
+    --amber:#f59e0b;--amber-bg:rgba(245,158,11,0.1);
+    --red:#ef4444;--red-bg:rgba(239,68,68,0.1);
+    --blue:#3b82f6;--blue-bg:rgba(59,130,246,0.1);
+    --radius:10px;--radius-lg:16px;--radius-xl:20px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;min-height:100vh}
+
+  nav{position:sticky;top:0;z-index:100;background:rgba(10,10,15,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:56px}
+  .nav-logo{font-size:16px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:8px}
+  .nav-logo .dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+  .nav-badge{font-size:11px;padding:3px 10px;background:var(--accent-glow);color:var(--accent);border:1px solid rgba(124,106,247,0.3);border-radius:20px;font-weight:500}
+
+  .hero{text-align:center;padding:5rem 2rem 3rem;max-width:700px;margin:0 auto}
+  .hero-eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;letter-spacing:0.08em;color:var(--accent);text-transform:uppercase;background:var(--accent-glow);border:1px solid rgba(124,106,247,0.25);padding:4px 14px;border-radius:20px;margin-bottom:1.5rem}
+  .hero h1{font-size:clamp(28px,5vw,48px);font-weight:600;line-height:1.2;color:var(--text);margin-bottom:1rem;letter-spacing:-0.02em}
+  .hero h1 span{color:var(--accent)}
+  .hero p{font-size:16px;color:var(--text2);max-width:500px;margin:0 auto 2rem;line-height:1.7}
+  .hero-stats{display:flex;justify-content:center;gap:2rem;flex-wrap:wrap}
+  .hero-stat{text-align:center}
+  .hero-stat .num{font-size:22px;font-weight:600;color:var(--text)}
+  .hero-stat .lbl{font-size:12px;color:var(--text3);margin-top:2px}
+
+  .container{max-width:1200px;margin:0 auto;padding:0 1.5rem}
+  .section{margin-bottom:2rem}
+
+  .card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;margin-bottom:1rem}
+  .card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem}
+  .card-title{font-size:14px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:8px}
+  .card-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px}
+  .icon-purple{background:var(--accent-glow)}
+  .icon-green{background:var(--green-bg)}
+  .icon-blue{background:var(--blue-bg)}
+  .icon-amber{background:var(--amber-bg)}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+
+  .field{display:flex;flex-direction:column;gap:6px}
+  .field label{font-size:11px;font-weight:600;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase}
+  .field input,.field select{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:9px 12px;font-size:14px;font-family:'Inter',sans-serif;color:var(--text);transition:border-color 0.15s;width:100%}
+  .field input:focus,.field select:focus{outline:none;border-color:rgba(124,106,247,0.5);background:var(--bg4)}
+  .field input:hover,.field select:hover{border-color:var(--border2)}
+  .field select option{background:var(--bg3)}
+  .field .hint{font-size:11px;color:var(--text3)}
+
+  .tabs-wrap{display:flex;align-items:center;gap:8px;margin-bottom:1rem;flex-wrap:wrap}
+  .tab-btn{padding:7px 16px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-size:13px;font-weight:500;cursor:pointer;transition:all 0.15s;font-family:'Inter',sans-serif}
+  .tab-btn:hover{border-color:var(--border2);color:var(--text)}
+  .tab-btn.active{background:var(--accent-glow);border-color:rgba(124,106,247,0.4);color:var(--accent)}
+  .tab-btn.add-btn{border-style:dashed;color:var(--text3)}
+  .tab-btn.add-btn:hover{color:var(--accent);border-color:rgba(124,106,247,0.4)}
+  .school-panel{display:none}
+  .school-panel.active{display:block}
+
+  .divider{display:flex;align-items:center;gap:12px;margin:1.5rem 0}
+  .divider-line{flex:1;height:1px;background:var(--border)}
+  .divider-label{font-size:11px;font-weight:600;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap}
+
+  .calc-btn{width:100%;padding:14px;background:var(--accent);border:none;border-radius:var(--radius-lg);color:white;font-size:15px;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;transition:all 0.15s;letter-spacing:-0.01em;margin-top:1.5rem}
+  .calc-btn:hover{background:#8c7cf8;transform:translateY(-1px)}
+  .calc-btn:active{transform:translateY(0)}
+
+  .remove-school-btn{font-size:12px;color:var(--red);background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;padding:4px 8px;border-radius:6px;transition:background 0.15s}
+  .remove-school-btn:hover{background:var(--red-bg)}
+
+  #results{display:none;padding-top:2rem}
+
+  .results-hero{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-xl);padding:2rem;margin-bottom:1.5rem;text-align:center}
+  .results-hero h2{font-size:20px;font-weight:600;color:var(--text);margin-bottom:0.5rem}
+
+  .metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:1.5rem 0}
+  .metric-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;text-align:center}
+  .metric-card.best{border-color:rgba(34,199,138,0.3);background:rgba(34,199,138,0.05)}
+  .metric-card .m-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px}
+  .metric-card .m-school{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px}
+  .metric-card .m-val{font-size:26px;font-weight:600;letter-spacing:-0.02em}
+  .val-green{color:var(--green)}
+  .val-amber{color:var(--amber)}
+  .val-red{color:var(--red)}
+  .val-blue{color:var(--blue)}
+  .best-badge{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;background:var(--green-bg);color:var(--green);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:6px}
+
+  .compare-table{width:100%;border-collapse:collapse;font-size:13px}
+  .compare-table th{text-align:right;padding:10px 16px;font-size:11px;font-weight:600;color:var(--text2);border-bottom:1px solid var(--border)}
+  .compare-table th:first-child{text-align:left}
+  .compare-table td{padding:10px 16px;text-align:right;border-bottom:1px solid var(--border);color:var(--text2)}
+  .compare-table td:first-child{text-align:left;color:var(--text3)}
+  .compare-table tr:last-child td{border-bottom:none}
+  .compare-table tr:hover td{background:var(--bg3)}
+  .compare-table .best-cell{color:var(--green);font-weight:600}
+  .compare-table .section-row td{background:var(--bg3);font-size:11px;font-weight:600;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;padding:6px 16px}
+
+  .chart-wrap{position:relative;height:280px;padding:8px 0}
+
+  .timeline-item{margin-bottom:1rem}
+  .timeline-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+  .timeline-name{font-size:13px;font-weight:500;color:var(--text)}
+  .timeline-val{font-size:13px;font-weight:600}
+  .bar-track{height:6px;border-radius:3px;background:var(--bg4);overflow:hidden}
+  .bar-fill{height:100%;border-radius:3px;transition:width 0.6s cubic-bezier(0.16,1,0.3,1)}
+
+  .alert{padding:12px 16px;border-radius:var(--radius);font-size:13px;line-height:1.6;margin-top:1rem}
+  .alert-info{background:var(--blue-bg);color:#93c5fd;border:1px solid rgba(59,130,246,0.2)}
+  .alert-warn{background:var(--amber-bg);color:#fcd34d;border:1px solid rgba(245,158,11,0.2)}
+
+  footer{text-align:center;padding:3rem 2rem 2rem;color:var(--text3);font-size:12px;border-top:1px solid var(--border);margin-top:4rem}
+
+  @media(max-width:768px){
+    .grid3,.grid4{grid-template-columns:1fr 1fr}
+    .hero{padding:3rem 1rem 2rem}
+    nav{padding:0 1rem}
+    .compare-table{font-size:12px}
+    .compare-table th,.compare-table td{padding:8px 10px}
+  }
+  @media(max-width:500px){
+    .grid2,.grid3,.grid4{grid-template-columns:1fr}
+    .metric-grid{grid-template-columns:1fr 1fr}
+    .hero h1{font-size:26px}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo"><div class="dot"></div>GradROI</div>
+  <div class="nav-badge">Beta v1.0</div>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">&#9733; International Student Finance Tool</div>
+  <h1>Make the <span>smartest</span> choice for your future</h1>
+  <p>Compare real costs, after-tax salaries, loan repayment timelines, and 5-year ROI across every admission offer — before you commit.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">4–13 yrs</div><div class="lbl">typical loan repayment range</div></div>
+    <div class="hero-stat"><div class="num">5 offers</div><div class="lbl">max simultaneous comparison</div></div>
+    <div class="hero-stat"><div class="num">8 cities</div><div class="lbl">tax + cost of living models</div></div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="section">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><div class="card-icon icon-purple">&#128100;</div>Your profile</div>
+      </div>
+      <div class="grid3">
+        <div class="field">
+          <label>Current annual salary (USD)</label>
+          <input type="number" id="curr_sal" value="0" min="0" placeholder="0 if fresh grad">
+          <span class="hint">Used to calculate opportunity cost during program</span>
+        </div>
+        <div class="field">
+          <label>Years of work experience</label>
+          <input type="number" id="exp_years" value="0" min="0" max="30">
+          <span class="hint">Affects salary negotiation position</span>
+        </div>
+        <div class="field">
+          <label>Savings available (USD)</label>
+          <input type="number" id="savings" value="20000" min="0">
+          <span class="hint">Used to reduce loan principal</span>
+        </div>
+      </div>
+      <div class="divider"><div class="divider-line"></div><div class="divider-label">Post-graduation assumptions</div><div class="divider-line"></div></div>
+      <div class="grid4">
+        <div class="field">
+          <label>Salary toward repayment (%)</label>
+          <input type="number" id="contrib_pct" value="30" min="1" max="100">
+          <span class="hint">% of net income allocated monthly</span>
+        </div>
+        <div class="field">
+          <label>Annual salary growth (%)</label>
+          <input type="number" id="sal_growth" value="8" min="0" max="40">
+          <span class="hint">Your personal growth assumption</span>
+        </div>
+        <div class="field">
+          <label>Target job location</label>
+          <select id="job_location">
+            <option value="NYC">New York City, NY</option>
+            <option value="SF">San Francisco, CA</option>
+            <option value="BOS">Boston, MA</option>
+            <option value="CHI">Chicago, IL</option>
+            <option value="SEA">Seattle, WA</option>
+            <option value="AUS">Austin, TX</option>
+            <option value="MIA">Miami, FL</option>
+            <option value="PIT" selected>Pittsburgh, PA</option>
+          </select>
+          <span class="hint">Drives state + city tax calculation</span>
+        </div>
+        <div class="field">
+          <label>Target job role</label>
+          <select id="job_role">
+            <option value="swe">Software Engineer</option>
+            <option value="ds">Data Scientist</option>
+            <option value="pm">Product Manager</option>
+            <option value="finance">Finance / Banking</option>
+            <option value="consult">Consulting</option>
+            <option value="mkt">Marketing</option>
+            <option value="ops">Operations</option>
+            <option value="other">Other</option>
+          </select>
+          <span class="hint">Informs salary progression curve</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><div class="card-icon icon-blue">&#127979;</div>Admission offers</div>
+        <span style="font-size:12px;color:var(--text3)">Add up to 5 schools</span>
+      </div>
+      <div class="tabs-wrap" id="school-tabs"></div>
+      <div id="school-panels"></div>
+    </div>
+  </div>
+
+  <button class="calc-btn" onclick="calculate()">&#9654;&nbsp; Calculate ROI &amp; Compare All Schools</button>
+
+  <div id="results">
+    <div class="divider" style="margin:2.5rem 0 1.5rem">
+      <div class="divider-line"></div><div class="divider-label">Your results</div><div class="divider-line"></div>
+    </div>
+    <div id="winner-card" class="results-hero"></div>
+    <div id="metrics-row" class="metric-grid"></div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><div class="card-icon icon-purple">&#9776;</div>Full comparison</div>
+      </div>
+      <div style="overflow-x:auto"><table class="compare-table" id="compare-table"></table></div>
+    </div>
+    <div class="grid2" style="margin-bottom:1rem">
+      <div class="card">
+        <div class="card-header"><div class="card-title"><div class="card-icon icon-green">&#128200;</div>Total investment breakdown</div></div>
+        <div class="chart-wrap"><canvas id="costChart"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title"><div class="card-icon icon-blue">&#128181;</div>Gross vs net vs loan</div></div>
+        <div class="chart-wrap"><canvas id="salChart"></canvas></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title"><div class="card-icon icon-amber">&#9200;</div>Loan repayment timeline</div></div>
+      <div id="timeline-bars"></div>
+      <div class="alert alert-warn" id="repay-note"></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title"><div class="card-icon icon-green">&#128293;</div>5-year cumulative wealth projection</div></div>
+      <div class="chart-wrap" style="height:320px"><canvas id="projChart"></canvas></div>
+      <div class="alert alert-info" id="proj-note"></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>GradROI &mdash; For informational purposes only. Consult a financial advisor for personalised guidance.</p>
+</footer>
+
+<script>
+const TAX={
+  NYC:{state:0.0685,city:0.03876,hi:6000,col:28000,col_mult:1.25,label:'New York City, NY'},
+  SF: {state:0.093, city:0,      hi:6500,col:30000,col_mult:1.22,label:'San Francisco, CA'},
+  BOS:{state:0.05,  city:0,      hi:6000,col:26000,col_mult:1.18,label:'Boston, MA'},
+  CHI:{state:0.0495,city:0,      hi:5500,col:22000,col_mult:1.05,label:'Chicago, IL'},
+  SEA:{state:0,     city:0,      hi:6500,col:24000,col_mult:1.15,label:'Seattle, WA'},
+  AUS:{state:0,     city:0,      hi:5200,col:20000,col_mult:1.00,label:'Austin, TX'},
+  MIA:{state:0,     city:0,      hi:5500,col:22000,col_mult:1.08,label:'Miami, FL'},
+  PIT:{state:0.0307,city:0.03,   hi:5000,col:18000,col_mult:1.00,label:'Pittsburgh, PA'},
+};
+const ROLE_GROWTH={swe:0.10,ds:0.09,pm:0.10,finance:0.08,consult:0.09,mkt:0.07,ops:0.07,other:0.07};
+const COLORS=['#7c6af7','#22c78a','#f59e0b','#3b82f6','#ef4444'];
+let schools=[],schoolCount=0,charts={};
+
+function fedTax(g){
+  const b=[[0,11000,.10],[11000,44725,.12],[44725,95375,.22],[95375,201050,.24],[201050,383900,.32],[383900,693750,.35],[693750,Infinity,.37]];
+  let t=0;for(let[lo,hi,r]of b){if(g<=lo)break;t+=(Math.min(g,hi)-lo)*r;}return t;
+}
+function netSal(gross,loc){const t=TAX[loc];return gross-fedTax(gross)-gross*t.state-gross*t.city-t.hi;}
+function fmt(n){return'$'+Math.round(n).toLocaleString();}
+function fmtK(n){return n>=1000?'$'+(n/1000).toFixed(0)+'k':fmt(n);}
+
+function addSchool(name){
+  if(schools.length>=5)return;
+  schoolCount++;
+  const id=schoolCount;
+  schools.push({id,name:name||'School '+id,tuition:60000,duration:2,scholarship:0,living_loc:'PIT',sal_min:90000,sal_max:130000,has_loan:true,loan_pct:80,loan_rate:6.5,refinance:false,refi_rate:4.5,refi_after:1});
+  renderTabs();renderPanels();switchTab(id);
+}
+function removeSchool(id){
+  if(schools.length<=1){alert('Keep at least one school.');return;}
+  schools=schools.filter(s=>s.id!==id);renderTabs();renderPanels();switchTab(schools[0].id);
+}
+function updateSchool(id,key,val){
+  const s=schools.find(s=>s.id===id);if(!s)return;s[key]=val;
+  if(key==='name')renderTabs();
+  const ne=document.getElementById('net-tui-'+id);if(ne&&(key==='tuition'||key==='scholarship'))ne.value=Math.max(0,s.tuition-s.scholarship).toLocaleString();
+  const ae=document.getElementById('sal-avg-'+id);if(ae&&(key==='sal_min'||key==='sal_max'))ae.value=Math.round((s.sal_min+s.sal_max)/2).toLocaleString();
+  if(key==='refinance'){renderPanels();switchTab(id);}
+}
+function renderTabs(){
+  document.getElementById('school-tabs').innerHTML=
+    schools.map(s=>`<button class="tab-btn" id="tab-${s.id}" onclick="switchTab(${s.id})">${s.name}</button>`).join('')+
+    (schools.length<5?`<button class="tab-btn add-btn" onclick="addSchool()">+ Add school</button>`:'');
+}
+function switchTab(id){
+  document.querySelectorAll('.tab-btn').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.school-panel').forEach(p=>p.classList.remove('active'));
+  const tab=document.getElementById('tab-'+id);const panel=document.getElementById('panel-'+id);
+  if(tab)tab.classList.add('active');if(panel)panel.classList.add('active');
+}
+function renderPanels(){
+  document.getElementById('school-panels').innerHTML=schools.map(s=>{
+    const nt=Math.max(0,s.tuition-s.scholarship);
+    const avg=Math.round((s.sal_min+s.sal_max)/2);
+    return`<div class="school-panel" id="panel-${s.id}">
+      <div class="card-header" style="margin-bottom:1rem">
+        <div class="card-title" style="font-size:16px">Program details</div>
+        ${schools.length>1?`<button class="remove-school-btn" onclick="removeSchool(${s.id})">&#10005; Remove</button>`:''}
+      </div>
+      <div class="grid3">
+        <div class="field"><label>School name</label><input type="text" value="${s.name}" oninput="updateSchool(${s.id},'name',this.value)"></div>
+        <div class="field"><label>Total tuition (USD)</label><input type="number" value="${s.tuition}" min="0" onchange="updateSchool(${s.id},'tuition',+this.value)"></div>
+        <div class="field"><label>Scholarship / grant (USD)</label><input type="number" value="${s.scholarship}" min="0" onchange="updateSchool(${s.id},'scholarship',+this.value)"></div>
+      </div>
+      <div class="grid3" style="margin-top:1rem">
+        <div class="field"><label>Program duration (years)</label><input type="number" value="${s.duration}" min="1" max="6" onchange="updateSchool(${s.id},'duration',+this.value)"></div>
+        <div class="field"><label>School city (cost of living)</label>
+          <select onchange="updateSchool(${s.id},'living_loc',this.value)">${Object.keys(TAX).map(k=>`<option value="${k}" ${k===s.living_loc?'selected':''}>${TAX[k].label}</option>`).join('')}</select>
+        </div>
+        <div class="field"><label>Net tuition after aid</label><input type="text" id="net-tui-${s.id}" value="${nt.toLocaleString()}" disabled style="opacity:0.45;cursor:not-allowed"></div>
+      </div>
+      <div class="divider"><div class="divider-line"></div><div class="divider-label">Salary expectations</div><div class="divider-line"></div></div>
+      <div class="grid3">
+        <div class="field"><label>Min starting salary (USD)</label><input type="number" value="${s.sal_min}" min="0" onchange="updateSchool(${s.id},'sal_min',+this.value)"><span class="hint">From school employment report or BLS data</span></div>
+        <div class="field"><label>Max starting salary (USD)</label><input type="number" value="${s.sal_max}" min="0" onchange="updateSchool(${s.id},'sal_max',+this.value)"></div>
+        <div class="field"><label>Average (auto-calculated)</label><input type="text" id="sal-avg-${s.id}" value="${avg.toLocaleString()}" disabled style="opacity:0.45;cursor:not-allowed"></div>
+      </div>
+      <div class="divider"><div class="divider-line"></div><div class="divider-label">Student loan</div><div class="divider-line"></div></div>
+      <div class="grid4">
+        <div class="field"><label>Taking a student loan?</label>
+          <select onchange="updateSchool(${s.id},'has_loan',this.value==='true')">
+            <option value="true" ${s.has_loan?'selected':''}>Yes</option>
+            <option value="false" ${!s.has_loan?'selected':''}>No</option>
+          </select>
+        </div>
+        <div class="field"><label>Loan % of net tuition</label><input type="number" value="${s.loan_pct}" min="0" max="100" onchange="updateSchool(${s.id},'loan_pct',+this.value)"></div>
+        <div class="field"><label>Interest rate (%)</label><input type="number" value="${s.loan_rate}" step="0.1" onchange="updateSchool(${s.id},'loan_rate',+this.value)"></div>
+        <div class="field"><label>Plan to refinance?</label>
+          <select onchange="updateSchool(${s.id},'refinance',this.value==='true')">
+            <option value="false" ${!s.refinance?'selected':''}>No</option>
+            <option value="true" ${s.refinance?'selected':''}>Yes — after landing a job</option>
+          </select>
+        </div>
+      </div>
+      ${s.refinance?`<div class="grid3" style="margin-top:1rem">
+        <div class="field"><label>Refinanced rate (%)</label><input type="number" value="${s.refi_rate}" step="0.1" onchange="updateSchool(${s.id},'refi_rate',+this.value)"></div>
+        <div class="field"><label>Refinance after (years post-grad)</label><input type="number" value="${s.refi_after}" min="0" max="5" onchange="updateSchool(${s.id},'refi_after',+this.value)"></div>
+        <div class="field"><label>&nbsp;</label><div style="font-size:12px;color:var(--text3);padding-top:8px;line-height:1.5">Refinancing reduces interest cost after securing employment</div></div>
+      </div>`:''}
+    </div>`;
+  }).join('');
+}
+
+function loanYears(principal,monthly,rate){
+  if(principal<=0||monthly<=0)return 0;
+  const r=rate/100/12;let bal=principal,months=0;
+  while(bal>0&&months<480){bal=bal*(1+r)-monthly;months++;if(bal<0)bal=0;}
+  return months/12;
+}
+
+function calculate(){
+  const currSal=+document.getElementById('curr_sal').value||0;
+  const expYrs=+document.getElementById('exp_years').value||0;
+  const savings=+document.getElementById('savings').value||0;
+  const contribPct=(+document.getElementById('contrib_pct').value||30)/100;
+  const salGrowth=(+document.getElementById('sal_growth').value||8)/100;
+  const jobLoc=document.getElementById('job_location').value;
+  const jobRole=document.getElementById('job_role').value;
+  const roleGrowth=ROLE_GROWTH[jobRole]||0.08;
+  const blendGrowth=(salGrowth+roleGrowth)/2;
+  const expBonus=expYrs>=3?0.07:expYrs>=1?0.04:0;
+
+  const res=schools.map((s,idx)=>{
+    const nt=Math.max(0,s.tuition-s.scholarship);
+    const col=TAX[s.living_loc];
+    const living=col.col*col.col_mult*s.duration;
+    const opp=currSal*s.duration;
+    const totalInv=nt+living+opp;
+    const loanAmt=s.has_loan?Math.max(0,(nt-savings)*(s.loan_pct/100)):0;
+    const avgSal=(s.sal_min+s.sal_max)/2*(1+expBonus);
+    const minSal=s.sal_min*(1+expBonus);
+    const maxSal=s.sal_max*(1+expBonus);
+    const netAvg=netSal(avgSal,jobLoc);
+    const monthlyRepay=netAvg/12*contribPct;
+
+    let yRepay=0;
+    if(loanAmt>0){
+      if(s.refinance){
+        const r1=s.loan_rate/100/12;let bal=loanAmt;
+        for(let m=0;m<s.refi_after*12;m++){bal=bal*(1+r1)-monthlyRepay;if(bal<=0){bal=0;break;}}
+        yRepay=s.refi_after+loanYears(bal,monthlyRepay,s.refi_rate);
+      }else{yRepay=loanYears(loanAmt,monthlyRepay,s.loan_rate);}
+    }
+
+    const salGain=avgSal-currSal;
+    const roi5=totalInv>0?Math.round((salGain*5-totalInv)/totalInv*100):0;
+
+    let cum5=0,sal=avgSal,lb=loanAmt;
+    for(let yr=1;yr<=5;yr++){
+      const n=netSal(sal,jobLoc);const rep=Math.min(lb,n*contribPct);
+      lb=Math.max(0,lb*(1+s.loan_rate/100)-rep*12);cum5+=n-rep*12;sal*=(1+blendGrowth);
+    }
+    return{s,idx,color:COLORS[idx],nt,living,opp,totalInv,loanAmt,avgSal,minSal,maxSal,netAvg,
+      netMin:netSal(minSal,jobLoc),netMax:netSal(maxSal,jobLoc),
+      salGain,yRepay:Math.round(yRepay*10)/10,
+      breakEven:salGain>0?Math.round(totalInv/salGain*10)/10:999,
+      roi5,cum5yr:Math.round(cum5),monthlyRepay:Math.round(monthlyRepay)};
+  });
+
+  const bROI=res.reduce((a,b)=>a.roi5>b.roi5?a:b);
+  const bRepay=res.reduce((a,b)=>(a.yRepay||999)<(b.yRepay||999)?a:b);
+  const bCost=res.reduce((a,b)=>a.totalInv<b.totalInv?a:b);
+  const bCum=res.reduce((a,b)=>a.cum5yr>b.cum5yr?a:b);
+
+  document.getElementById('winner-card').innerHTML=`
+    <div style="font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:8px;font-weight:600">Best overall ROI</div>
+    <div style="font-size:32px;font-weight:700;color:var(--text);letter-spacing:-0.02em;margin-bottom:8px">${bROI.s.name}</div>
+    <div style="font-size:15px;color:var(--text2)">
+      <span style="color:var(--${bROI.roi5>0?'green':'red'});font-weight:600">${bROI.roi5>0?'+':''}${bROI.roi5}% 5-year ROI</span>
+      &nbsp;&bull;&nbsp; ${fmt(bROI.avgSal)} avg. starting salary
+      &nbsp;&bull;&nbsp; ${bROI.loanAmt>0?bROI.yRepay+' yrs to repay':'No loan taken'}
+    </div>`;
+
+  document.getElementById('metrics-row').innerHTML=[
+    {lbl:'Best 5-yr ROI',sch:bROI,val:(bROI.roi5>0?'+':'')+bROI.roi5+'%',cls:bROI.roi5>0?'val-green':'val-red'},
+    {lbl:'Fastest repayment',sch:bRepay,val:bRepay.loanAmt>0?bRepay.yRepay+' yrs':'No loan',cls:'val-green'},
+    {lbl:'Lowest total cost',sch:bCost,val:fmtK(bCost.totalInv),cls:'val-blue'},
+    {lbl:'Highest 5yr wealth',sch:bCum,val:fmtK(bCum.cum5yr),cls:'val-amber'},
+  ].map(m=>`<div class="metric-card best">
+    <div class="best-badge">&#9650; best</div>
+    <div class="m-label">${m.lbl}</div>
+    <div class="m-school">${m.sch.s.name}</div>
+    <div class="m-val ${m.cls}">${m.val}</div>
+  </div>`).join('');
+
+  const tblCols=`<th style="text-align:left;min-width:170px">Metric</th>${res.map(r=>`<th style="color:${r.color}">${r.s.name}</th>`).join('')}`;
+  const rows=[
+    {sec:'Cost of program'},
+    {lbl:'Net tuition',fn:r=>fmt(r.nt),b:'min'},
+    {lbl:'Living expenses (total)',fn:r=>fmt(r.living),b:'min'},
+    {lbl:'Opportunity cost',fn:r=>fmt(r.opp),b:'min'},
+    {lbl:'Total investment',fn:r=>fmt(r.totalInv),b:'min'},
+    {lbl:'Loan amount',fn:r=>r.loanAmt>0?fmt(r.loanAmt):'—',b:'min'},
+    {sec:'Salary outcomes'},
+    {lbl:'Avg. starting salary',fn:r=>fmt(r.avgSal),b:'max'},
+    {lbl:'Min starting salary',fn:r=>fmt(r.minSal),b:null},
+    {lbl:'Max starting salary',fn:r=>fmt(r.maxSal),b:null},
+    {lbl:'Net salary (after tax + HI)',fn:r=>fmt(r.netAvg),b:'max'},
+    {lbl:'Net min / max range',fn:r=>fmtK(r.netMin)+' – '+fmtK(r.netMax),b:null},
+    {lbl:'Monthly repayment capacity',fn:r=>fmt(r.monthlyRepay)+'/mo',b:'max'},
+    {sec:'ROI analysis'},
+    {lbl:'Salary gain vs current',fn:r=>r.salGain>=0?'+'+fmt(r.salGain):fmt(r.salGain),b:'max'},
+    {lbl:'Years to repay loan',fn:r=>r.loanAmt>0?r.yRepay+' yrs':'No loan',b:'min'},
+    {lbl:'Break-even (years)',fn:r=>r.breakEven<50?r.breakEven+' yrs':'N/A',b:'min'},
+    {lbl:'5-year ROI',fn:r=>(r.roi5>=0?'+':'')+r.roi5+'%',b:'max'},
+    {lbl:'5-yr cumulative wealth',fn:r=>fmt(r.cum5yr),b:'max'},
+  ];
+  let th=`<thead><tr>${tblCols}</tr></thead><tbody>`;
+  rows.forEach(row=>{
+    if(row.sec){th+=`<tr class="section-row"><td colspan="${res.length+1}">${row.sec}</td></tr>`;return;}
+    const vals=res.map(r=>row.fn(r));
+    let best=-1;
+    if(row.b){
+      const nums=res.map(r=>parseFloat(row.fn(r).replace(/[^0-9.-]/g,'')));
+      const valid=nums.filter(n=>!isNaN(n));
+      if(valid.length>1){const t=row.b==='min'?Math.min(...valid):Math.max(...valid);best=nums.indexOf(t);}
+    }
+    th+=`<tr><td>${row.lbl}</td>${vals.map((v,i)=>`<td class="${i===best?'best-cell':''}">${v}${i===best&&res.length>1?' ✓':''}</td>`).join('')}</tr>`;
+  });
+  th+='</tbody>';
+  document.getElementById('compare-table').innerHTML=th;
+
+  destroyChart('costChart');
+  charts.costChart=new Chart(document.getElementById('costChart'),{type:'bar',data:{
+    labels:res.map(r=>r.s.name),
+    datasets:[
+      {label:'Net tuition',data:res.map(r=>r.nt),backgroundColor:'#7c6af7'},
+      {label:'Living expenses',data:res.map(r=>r.living),backgroundColor:'#3b82f6'},
+      {label:'Opportunity cost',data:res.map(r=>r.opp),backgroundColor:'#5a5a72'},
+    ]},options:cOpts('stacked')});
+
+  destroyChart('salChart');
+  charts.salChart=new Chart(document.getElementById('salChart'),{type:'bar',data:{
+    labels:res.map(r=>r.s.name),
+    datasets:[
+      {label:'Gross salary',data:res.map(r=>Math.round(r.avgSal)),backgroundColor:'#22c78a'},
+      {label:'Net after tax + HI',data:res.map(r=>Math.round(r.netAvg)),backgroundColor:'#34d399'},
+      {label:'Loan principal',data:res.map(r=>Math.round(r.loanAmt)),backgroundColor:'#ef4444'},
+    ]},options:cOpts('grouped')});
+
+  const maxYrs=Math.max(...res.map(r=>r.yRepay||0),1);
+  document.getElementById('timeline-bars').innerHTML=res.map(r=>{
+    const pct=r.loanAmt>0?Math.min(100,r.yRepay/maxYrs*100):0;
+    const col=r.yRepay<=5?'#22c78a':r.yRepay<=9?'#f59e0b':'#ef4444';
+    const vc=r.yRepay<=5?'val-green':r.yRepay<=9?'val-amber':'val-red';
+    return`<div class="timeline-item">
+      <div class="timeline-header">
+        <div class="timeline-name">${r.s.name}</div>
+        <div class="timeline-val ${vc}">${r.loanAmt>0?r.yRepay+' years':'No loan taken'}</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${col}"></div></div>
+    </div>`;
+  }).join('');
+
+  const withLoan=res.filter(r=>r.loanAmt>0);
+  document.getElementById('repay-note').textContent=
+    `Based on ${Math.round(contribPct*100)}% of net monthly salary allocated to repayment. `+
+    (withLoan.length>0?`Repayment range across your schools: ${Math.min(...withLoan.map(r=>r.yRepay)).toFixed(1)} – ${Math.max(...withLoan.map(r=>r.yRepay)).toFixed(1)} years.`:'No loans taken.');
+
+  const projLabels=Array.from({length:6},(_,i)=>'Year '+i);
+  const projData=res.map(r=>{
+    let cum=0,sal=r.avgSal,lb=r.loanAmt;const pts=[0];
+    for(let yr=1;yr<=5;yr++){
+      const n=netSal(sal,jobLoc);const rep=Math.min(lb,n*contribPct);
+      lb=Math.max(0,lb*(1+r.s.loan_rate/100)-rep*12);cum+=n-rep*12;sal*=(1+blendGrowth);pts.push(Math.round(cum));
+    }
+    return pts;
+  });
+  destroyChart('projChart');
+  charts.projChart=new Chart(document.getElementById('projChart'),{type:'line',data:{
+    labels:projLabels,
+    datasets:res.map((r,i)=>({label:r.s.name,data:projData[i],borderColor:r.color,backgroundColor:'transparent',borderWidth:2.5,pointRadius:4,tension:0.4}))
+  },options:cOpts('line')});
+
+  document.getElementById('proj-note').textContent=
+    `Projection uses ${Math.round(blendGrowth*100)}% blended annual salary growth `+
+    `(your input: ${Math.round(salGrowth*100)}%, role-based: ${Math.round(roleGrowth*100)}%). `+
+    `Accounts for loan interest accrual and monthly repayments. Salary progression is approximate.`;
+
+  document.getElementById('results').style.display='block';
+  document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function destroyChart(id){if(charts[id]){charts[id].destroy();delete charts[id];}}
+
+function cOpts(type){
+  return{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{
+      legend:{labels:{color:'#9090a8',font:{family:'Inter',size:11},boxWidth:10,padding:16}},
+      tooltip:{backgroundColor:'#1e1e28',borderColor:'rgba(255,255,255,0.08)',borderWidth:1,titleColor:'#f0f0f5',bodyColor:'#9090a8',padding:12,
+        callbacks:{label:ctx=>' '+(ctx.dataset.label||'')+': $'+ctx.parsed.y.toLocaleString()}}
+    },
+    scales:{
+      x:{stacked:type==='stacked',ticks:{color:'#5a5a72',font:{family:'Inter',size:11}},grid:{color:'rgba(255,255,255,0.04)'}},
+      y:{stacked:type==='stacked',ticks:{color:'#5a5a72',font:{family:'Inter',size:11},callback:v=>'$'+(v/1000).toFixed(0)+'k'},grid:{color:'rgba(255,255,255,0.04)'}}
+    }
+  };
+}
+
+addSchool('School 1');
+addSchool('School 2');
+switchTab(1);
+</script>
+</body>
+</html>
