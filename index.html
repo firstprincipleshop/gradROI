@@ -58,8 +58,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(10,10,15,0.9);backdrop-fil
 .field input:hover:not(:disabled),.field select:hover{border-color:var(--border2)}
 .field input:disabled{opacity:0.4;cursor:not-allowed}
 .field select option{background:var(--bg3)}
-.field .hint{font-size:11px;color:var(--text3);line-height:1.5}
-.field .desc{font-size:11px;color:#5a5a72;line-height:1.5;margin-top:1px}
+.field .desc{font-size:11px;color:var(--text3);line-height:1.5;margin-top:1px}
 
 .tabs-wrap{display:flex;align-items:center;gap:8px;margin-bottom:1rem;flex-wrap:wrap}
 .tab-btn{padding:7px 16px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-size:13px;font-weight:500;cursor:pointer;transition:all 0.15s;font-family:'Inter',sans-serif}
@@ -93,7 +92,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(10,10,15,0.9);backdrop-fil
 
 .compare-table{width:100%;border-collapse:collapse;font-size:13px}
 .compare-table th{text-align:right;padding:10px 14px;font-size:11px;font-weight:600;color:var(--text2);border-bottom:1px solid var(--border)}
-.compare-table th:first-child{text-align:left;min-width:180px}
+.compare-table th:first-child{text-align:left;min-width:200px}
 .compare-table td{padding:10px 14px;text-align:right;border-bottom:1px solid var(--border);color:var(--text2)}
 .compare-table td:first-child{text-align:left;color:var(--text3)}
 .compare-table tr:last-child td{border-bottom:none}
@@ -102,8 +101,8 @@ nav{position:sticky;top:0;z-index:100;background:rgba(10,10,15,0.9);backdrop-fil
 .compare-table .section-row td{background:var(--bg3);font-size:11px;font-weight:600;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;padding:6px 14px}
 
 .chart-wrap{position:relative;height:280px;padding:8px 0}
-.timeline-item{margin-bottom:1rem}
-.timeline-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.timeline-item{margin-bottom:1.25rem}
+.timeline-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:6px}
 .timeline-name{font-size:13px;font-weight:500;color:var(--text)}
 .timeline-val{font-size:13px;font-weight:600}
 .bar-track{height:6px;border-radius:3px;background:var(--bg4);overflow:hidden}
@@ -112,7 +111,6 @@ nav{position:sticky;top:0;z-index:100;background:rgba(10,10,15,0.9);backdrop-fil
 .alert{padding:12px 16px;border-radius:var(--radius);font-size:13px;line-height:1.6;margin-top:1rem}
 .alert-info{background:var(--blue-bg);color:#93c5fd;border:1px solid rgba(59,130,246,0.2)}
 .alert-warn{background:var(--amber-bg);color:#fcd34d;border:1px solid rgba(245,158,11,0.2)}
-.alert-green{background:var(--green-bg);color:#6ee7b7;border:1px solid rgba(34,199,138,0.2)}
 
 .assumptions-box{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;margin-top:1.5rem;font-size:13px;color:var(--text2);line-height:1.8}
 .assumptions-box h4{font-size:12px;font-weight:600;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px}
@@ -130,7 +128,7 @@ footer{text-align:center;padding:3rem 2rem 2rem;color:var(--text3);font-size:12p
 
 <nav>
   <div class="nav-logo"><div class="dot"></div>GradROI</div>
-  <div class="nav-badge">Beta v2.0</div>
+  <div class="nav-badge">Beta v2.1</div>
 </nav>
 
 <div class="hero">
@@ -146,7 +144,6 @@ footer{text-align:center;padding:3rem 2rem 2rem;color:var(--text3);font-size:12p
 
 <div class="container">
 
-<!-- PROFILE -->
 <div class="section">
 <div class="card">
   <div class="card-header">
@@ -156,17 +153,17 @@ footer{text-align:center;padding:3rem 2rem 2rem;color:var(--text3);font-size:12p
     <div class="field">
       <label>Current annual salary (USD)</label>
       <input type="number" id="curr_sal" value="0" min="0" placeholder="0 if fresh grad">
-      <span class="desc">If you're currently employed, enter your gross annual salary. This is used to calculate the opportunity cost — the income you give up while studying. Leave as 0 if you're a fresh graduate.</span>
+      <span class="desc">Your gross annual salary if currently employed. Used to calculate opportunity cost — income you forgo while studying. Enter 0 if you are a fresh graduate.</span>
     </div>
     <div class="field">
       <label>Years of work experience</label>
       <input type="number" id="exp_years" value="0" min="0" max="30">
-      <span class="desc">Your total professional work experience before the program. More experience (3+ years) typically means you can negotiate toward the higher end of offered salary ranges.</span>
+      <span class="desc">Total professional experience before the program. 1–2 years adds ~4% to starting salary; 3+ years adds ~7%, reflecting stronger negotiating position.</span>
     </div>
     <div class="field">
       <label>Personal savings to use (USD)</label>
       <input type="number" id="savings" value="20000" min="0">
-      <span class="desc">The amount of your own savings you plan to put toward the program costs. This directly reduces how much you need to borrow as a student loan.</span>
+      <span class="desc">Amount of your own savings you will put toward program costs. Directly reduces how much you need to borrow.</span>
     </div>
   </div>
   <div class="divider"><div class="divider-line"></div><div class="divider-label">Post-graduation assumptions</div><div class="divider-line"></div></div>
@@ -174,12 +171,12 @@ footer{text-align:center;padding:3rem 2rem 2rem;color:var(--text3);font-size:12p
     <div class="field">
       <label>Salary toward repayment (%)</label>
       <input type="number" id="contrib_pct" value="30" min="1" max="100">
-      <span class="desc">What percentage of your monthly net (take-home) salary you will put toward loan repayment. 20–40% is a common range. Higher = faster repayment.</span>
+      <span class="desc">Percentage of monthly net take-home you allocate to loan repayment. 20–40% is a common range. Higher = faster payoff.</span>
     </div>
     <div class="field">
       <label>Annual salary growth (%)</label>
       <input type="number" id="sal_growth" value="8" min="0" max="40">
-      <span class="desc">Your expected year-on-year salary increase. Industry averages range from 5–12%. This is used in 5-year and 10-year wealth projections.</span>
+      <span class="desc">Expected year-on-year salary increase. Industry averages range 5–12%. Used in 5-year and 10-year wealth projections.</span>
     </div>
     <div class="field">
       <label>Target job state</label>
@@ -235,18 +232,17 @@ footer{text-align:center;padding:3rem 2rem 2rem;color:var(--text3);font-size:12p
         <option value="New Hampshire">New Hampshire</option>
         <option value="Maine">Maine</option>
       </select>
-      <span class="desc">The US state where you plan to work after graduation. Each state has different income tax rates which are applied to your post-grad salary.</span>
+      <span class="desc">US state where you plan to work after graduation. Each state has different income tax rates applied to your post-grad salary.</span>
     </div>
     <div class="field">
       <label>Expected unemployment after grad (months)</label>
       <input type="number" id="unemp_months" value="3" min="0" max="24">
-      <span class="desc">The number of months you might spend job-hunting before your first paycheck. During this period, your student loan continues to accrue interest and you still have living costs — both are factored in.</span>
+      <span class="desc">Months of job-hunting before your first paycheck. Loan interest keeps compounding and living costs continue during this period — both are factored in.</span>
     </div>
   </div>
 </div>
 </div>
 
-<!-- SCHOOLS -->
 <div class="section">
 <div class="card">
   <div class="card-header">
@@ -260,7 +256,6 @@ footer{text-align:center;padding:3rem 2rem 2rem;color:var(--text3);font-size:12p
 
 <button class="calc-btn" onclick="calculate()">&#9654;&nbsp; Calculate ROI &amp; Compare All Schools</button>
 
-<!-- RESULTS -->
 <div id="results">
   <div class="divider" style="margin:2.5rem 0 1.5rem">
     <div class="divider-line"></div><div class="divider-label">Your results</div><div class="divider-line"></div>
@@ -301,20 +296,19 @@ footer{text-align:center;padding:3rem 2rem 2rem;color:var(--text3);font-size:12p
   <div class="assumptions-box">
     <h4>Assumptions, inclusions &amp; limitations</h4>
     <ul>
-      <li><strong>Federal tax</strong> uses 2024 IRS brackets with standard deduction ($14,600 for single filers), applied progressively — not averaged.</li>
-      <li><strong>State tax</strong> uses flat effective rates per state from verified 2024 data embedded in this file.</li>
+      <li><strong>Federal tax</strong> uses 2024 IRS progressive brackets with $14,600 standard deduction for single filers.</li>
+      <li><strong>State tax</strong> uses flat effective rates per state from 2024 data embedded in this file, applied to taxable income.</li>
       <li><strong>Payroll taxes</strong> include Social Security (6.2%) and Medicare (1.45%) on gross salary.</li>
-      <li><strong>Not accounted for:</strong> NYC/SF city income taxes, FICA wage base caps, Alternative Minimum Tax, OPT/F-1 visa FICA exemptions in the first years, investment gains tax.</li>
-      <li><strong>Refinancing</strong> means replacing your existing student loan with a new private loan at a lower interest rate — typically possible after you have a job offer and income history. It can significantly reduce total interest paid.</li>
-      <li><strong>Unemployment period</strong> — during this phase, loan interest compounds monthly and living costs (estimated at your per-year cost of attendance ÷ 12) continue.</li>
-      <li><strong>Wealth projection</strong> — once your loan is fully repaid, the repayment amount shifts to an investment growing at 8% annual return (S&amp;P 500 long-run average).</li>
-      <li><strong>Salary progression</strong> is an approximation based on your input growth rate. Actual progression depends on company, role, and market conditions.</li>
-      <li><strong>Experience bonus</strong>: 1–2 years adds ~4% to starting salary; 3+ years adds ~7%, reflecting stronger negotiation position.</li>
+      <li><strong>Not accounted for:</strong> NYC/SF city taxes, FICA wage base caps, AMT, OPT/F-1 FICA exemptions in early years, investment gains tax.</li>
+      <li><strong>Refinancing</strong> replaces your student loan with a new private loan at a lower rate — typically possible after ~1 year of employment history. Reduces total interest paid significantly.</li>
+      <li><strong>Unemployment period</strong> — loan interest compounds monthly and living costs (annual COA ÷ 12) continue. Both are deducted before repayment begins.</li>
+      <li><strong>Wealth projection</strong> — once your loan is fully repaid, the repayment amount shifts to an investment growing at 8%/yr (S&amp;P 500 long-run average).</li>
+      <li><strong>Salary progression</strong> is approximate based on your input growth rate. Actual results depend on company, role, and market conditions.</li>
     </ul>
   </div>
 </div>
 
-</div><!-- /container -->
+</div>
 
 <footer>
   <p>GradROI — For informational purposes only. Consult a financial advisor for personalised guidance.</p>
@@ -332,7 +326,7 @@ const TAX_DATA = {
     ],
     payroll_taxes:{social_security_rate:0.062,medicare_rate:0.0145}
   },
-  state: {
+  state:{
     "Alabama":{type:"flat_estimate",rate:0.035},"Alaska":{type:"none",rate:0},
     "Arizona":{type:"flat",rate:0.025},"Arkansas":{type:"flat_estimate",rate:0.029},
     "California":{type:"flat_estimate",rate:0.065},"Colorado":{type:"flat",rate:0.044},
@@ -382,9 +376,13 @@ function calcTax(salary, stateName) {
   return { totalTax: Math.round(totalTax), takeHome: Math.round(salary - totalTax) };
 }
 
-function fmt(n){return'$'+Math.round(n).toLocaleString();}
-function fmtK(n){return Math.abs(n)>=1000?'$'+(n/1000).toFixed(0)+'k':fmt(n);}
-function fmtYr(y){return y>=50?'N/A':y.toFixed(1)+' yrs';}
+function fmt(n){ return '$' + Math.round(n).toLocaleString(); }
+function fmtK(n){ return Math.abs(n)>=1000 ? '$'+(n/1000).toFixed(0)+'k' : fmt(n); }
+function fmtYr(y){ return y >= 50 ? 'N/A' : y.toFixed(1)+' yrs'; }
+
+function getCOA(s){
+  return Math.max(0, s.tuition + s.living + s.insurance + s.books + s.others - s.scholarship);
+}
 
 function addSchool(name) {
   if (schools.length >= 5) return;
@@ -393,11 +391,11 @@ function addSchool(name) {
   schools.push({
     id, name: name||'School '+id,
     duration_months: 24,
-    tuition: 60000, living: 18000, insurance: 3000,
-    books: 2000, scholarship: 0, others: 1500,
-    sal_min: 90000, sal_avg: 110000, sal_max: 130000,
-    has_loan: true, loan_pct: 80, loan_rate: 6.5,
-    refinance: false, refi_rate: 4.5, refi_after: 1
+    tuition:60000, living:18000, insurance:3000,
+    books:2000, scholarship:0, others:1500,
+    sal_min:90000, sal_avg:110000, sal_max:130000,
+    has_loan:true, loan_pct:80, loan_rate:6.5,
+    refinance:false, refi_rate:4.5, refi_after:1
   });
   renderTabs(); renderPanels(); switchTab(id);
 }
@@ -415,15 +413,10 @@ function updateSchool(id, key, val) {
   if (key === 'name') renderTabs();
   const coaKeys = ['tuition','living','insurance','books','scholarship','others'];
   if (coaKeys.includes(key)) {
-    const coa = s.tuition + s.living + s.insurance + s.books + s.others - s.scholarship;
     const el = document.getElementById('coa-'+id);
-    if (el) el.value = '$' + Math.max(0, coa).toLocaleString();
+    if (el) el.value = '$' + Math.max(0, getCOA(s)).toLocaleString();
   }
   if (key === 'refinance') { renderPanels(); switchTab(id); }
-}
-
-function getCOA(s) {
-  return Math.max(0, s.tuition + s.living + s.insurance + s.books + s.others - s.scholarship);
 }
 
 function renderTabs() {
@@ -435,7 +428,8 @@ function renderTabs() {
 function switchTab(id) {
   document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.school-panel').forEach(p => p.classList.remove('active'));
-  const tab = document.getElementById('tab-'+id), panel = document.getElementById('panel-'+id);
+  const tab = document.getElementById('tab-'+id);
+  const panel = document.getElementById('panel-'+id);
   if (tab) tab.classList.add('active');
   if (panel) panel.classList.add('active');
 }
@@ -446,7 +440,7 @@ function renderPanels() {
     return `<div class="school-panel" id="panel-${s.id}">
       <div class="card-header" style="margin-bottom:1rem">
         <div class="card-title" style="font-size:15px">Program details</div>
-        ${schools.length>1?`<button class="remove-school-btn" onclick="removeSchool(${s.id})">&#10005; Remove</button>`:''}
+        ${schools.length>1 ? `<button class="remove-school-btn" onclick="removeSchool(${s.id})">&#10005; Remove</button>` : ''}
       </div>
       <div class="grid3">
         <div class="field">
@@ -455,32 +449,36 @@ function renderPanels() {
         </div>
         <div class="field">
           <label>Program duration (months)</label>
-          <input type="number" value="${s.duration_months}" min="1" max="72" onchange="updateSchool(${s.id},'duration_months',+this.value)">
-          <span class="desc">e.g. 24 = 2 years, 18 = 1.5 years. Affects total living cost and opportunity cost calculations.</span>
+          <input type="number" value="${s.duration_months}" min="1" max="72"
+            onchange="updateSchool(${s.id},'duration_months',+this.value);
+                      const el=document.getElementById('dur-yr-${s.id}');
+                      if(el) el.value=(+this.value/12).toFixed(1)+' yrs';">
+          <span class="desc">e.g. 24 = 2 years, 18 = 1.5 years. Affects total living cost and opportunity cost.</span>
         </div>
-        <div class="field" style="justify-content:flex-end">
+        <div class="field">
           <label>Duration in years</label>
-          <input type="text" value="${(s.duration_months/12).toFixed(1)} yrs" disabled>
+          <input type="text" id="dur-yr-${s.id}" value="${(s.duration_months/12).toFixed(1)} yrs" disabled>
+          <span class="desc">Auto-calculated from months above.</span>
         </div>
       </div>
 
-      <div class="divider"><div class="divider-line"></div><div class="divider-label">Cost of attendance breakdown</div><div class="divider-line"></div></div>
-      <div class="alert alert-info" style="margin-bottom:1rem;font-size:12px">Enter annual costs. Total will be multiplied by program duration automatically.</div>
+      <div class="divider"><div class="divider-line"></div><div class="divider-label">Cost of attendance (annual figures)</div><div class="divider-line"></div></div>
+      <div class="alert alert-info" style="margin-bottom:1rem;font-size:12px">Enter all costs as annual amounts. They will be multiplied by program duration automatically.</div>
       <div class="grid3">
         <div class="field">
           <label>Tuition (annual, USD)</label>
           <input type="number" value="${s.tuition}" min="0" onchange="updateSchool(${s.id},'tuition',+this.value)">
-          <span class="desc">Total annual tuition fees charged by the school before any aid or scholarships.</span>
+          <span class="desc">Annual tuition charged by the school before any aid or scholarships.</span>
         </div>
         <div class="field">
-          <label>Living cost — rent &amp; food (annual)</label>
+          <label>Living — rent &amp; food (annual)</label>
           <input type="number" value="${s.living}" min="0" onchange="updateSchool(${s.id},'living',+this.value)">
-          <span class="desc">Your estimated annual spend on rent and food in the school's city. Research local apartment costs carefully.</span>
+          <span class="desc">Your estimated annual spend on rent and food in the school's city. Research local costs carefully.</span>
         </div>
         <div class="field">
           <label>Health insurance (annual)</label>
           <input type="number" value="${s.insurance}" min="0" onchange="updateSchool(${s.id},'insurance',+this.value)">
-          <span class="desc">Most US universities require international students to have health insurance. This is often $2,000–$5,000/year.</span>
+          <span class="desc">Most US universities require international students to carry health insurance — typically $2,000–$5,000/year.</span>
         </div>
       </div>
       <div class="grid3" style="margin-top:1rem">
@@ -492,19 +490,19 @@ function renderPanels() {
         <div class="field">
           <label>Scholarship / grant (annual)</label>
           <input type="number" value="${s.scholarship}" min="0" onchange="updateSchool(${s.id},'scholarship',+this.value)">
-          <span class="desc">Annual scholarship or grant amount offered by the school. This reduces your total cost of attendance.</span>
+          <span class="desc">Annual scholarship or grant from the school. This reduces your total cost of attendance.</span>
         </div>
         <div class="field">
-          <label>Others (travel, misc, annual)</label>
+          <label>Others — travel, misc (annual)</label>
           <input type="number" value="${s.others}" min="0" onchange="updateSchool(${s.id},'others',+this.value)">
-          <span class="desc">Flights home, personal expenses, visa fees, entertainment, etc.</span>
+          <span class="desc">Flights home, visa fees, personal expenses, entertainment, etc.</span>
         </div>
       </div>
       <div class="grid3" style="margin-top:1rem">
         <div class="field">
           <label>Total cost of attendance (auto)</label>
           <input type="text" id="coa-${s.id}" value="$${coa.toLocaleString()}" disabled>
-          <span class="desc">Auto-calculated: (Tuition + Living + Insurance + Books + Others − Scholarship) × duration. This is your net annual cost.</span>
+          <span class="desc">Annual net cost = Tuition + Living + Insurance + Books + Others − Scholarship. Multiplied by duration for totals.</span>
         </div>
       </div>
 
@@ -513,17 +511,17 @@ function renderPanels() {
         <div class="field">
           <label>Minimum starting salary (USD)</label>
           <input type="number" value="${s.sal_min}" min="0" onchange="updateSchool(${s.id},'sal_min',+this.value)">
-          <span class="desc">The lowest reported starting salary in this program's employment report (or BLS data for your target role). Used to show best-case repayment time.</span>
+          <span class="desc">Lowest reported salary in the school's employment report. Used to calculate worst-case loan repayment time.</span>
         </div>
         <div class="field">
           <label>Average starting salary (USD)</label>
           <input type="number" value="${s.sal_avg}" min="0" onchange="updateSchool(${s.id},'sal_avg',+this.value)">
-          <span class="desc">The median or mean salary from the school's official employment report. This is the primary salary used in all ROI and comparison calculations.</span>
+          <span class="desc">Median or mean salary from the school's official employment report. This drives all primary ROI and comparison calculations.</span>
         </div>
         <div class="field">
           <label>Maximum starting salary (USD)</label>
           <input type="number" value="${s.sal_max}" min="0" onchange="updateSchool(${s.id},'sal_max',+this.value)">
-          <span class="desc">The highest reported starting salary. Used to show best-case repayment time. High values are often outliers — use with caution.</span>
+          <span class="desc">Highest reported salary. Used to calculate best-case loan repayment time. High values are often outliers — use with caution.</span>
         </div>
       </div>
 
@@ -535,17 +533,17 @@ function renderPanels() {
             <option value="true" ${s.has_loan?'selected':''}>Yes</option>
             <option value="false" ${!s.has_loan?'selected':''}>No</option>
           </select>
-          <span class="desc">If you're funding the program entirely from savings or family support, select No.</span>
+          <span class="desc">Select No if funding entirely from savings or family support.</span>
         </div>
         <div class="field">
-          <label>Loan % of (COA − savings)</label>
+          <label>Loan % of (total COA − savings)</label>
           <input type="number" value="${s.loan_pct}" min="0" max="100" onchange="updateSchool(${s.id},'loan_pct',+this.value)">
-          <span class="desc">What fraction of your remaining cost (after savings) you borrow. 100% means you borrow everything beyond your savings.</span>
+          <span class="desc">Fraction of remaining cost (after your savings) that you borrow. 100% = borrow everything beyond your savings.</span>
         </div>
         <div class="field">
           <label>Loan interest rate (%)</label>
           <input type="number" value="${s.loan_rate}" step="0.1" onchange="updateSchool(${s.id},'loan_rate',+this.value)">
-          <span class="desc">Federal grad PLUS loans are ~8–9%. Private loans vary by lender. Interest accrues during the program and unemployment period.</span>
+          <span class="desc">Federal Grad PLUS loans are ~8–9%. Private loans vary by lender. Interest accrues during program and unemployment period.</span>
         </div>
         <div class="field">
           <label>Plan to refinance?</label>
@@ -553,21 +551,21 @@ function renderPanels() {
             <option value="false" ${!s.refinance?'selected':''}>No</option>
             <option value="true" ${s.refinance?'selected':''}>Yes — after landing a job</option>
           </select>
-          <span class="desc">Refinancing replaces your existing loan with a new private loan at a lower rate. Usually possible after ~1 year of employment history.</span>
+          <span class="desc">Refinancing replaces your loan with a new private loan at a lower rate. Usually possible after ~1 year of employment history. Can save tens of thousands in interest.</span>
         </div>
       </div>
-      ${s.refinance?`<div class="grid3" style="margin-top:1rem">
+      ${s.refinance ? `<div class="grid3" style="margin-top:1rem">
         <div class="field">
           <label>Refinanced interest rate (%)</label>
           <input type="number" value="${s.refi_rate}" step="0.1" onchange="updateSchool(${s.id},'refi_rate',+this.value)">
-          <span class="desc">The new, lower rate after refinancing. Private refinance rates typically range from 4–6%.</span>
+          <span class="desc">New lower rate after refinancing. Private refinance rates typically range 4–6%.</span>
         </div>
         <div class="field">
           <label>Refinance after (years post-graduation)</label>
           <input type="number" value="${s.refi_after}" min="0" max="5" onchange="updateSchool(${s.id},'refi_after',+this.value)">
-          <span class="desc">How many years after graduating before you refinance. During this time your original rate applies.</span>
+          <span class="desc">Years after graduating before you refinance. Original rate applies until then.</span>
         </div>
-      </div>`:''}
+      </div>` : ''}
     </div>`;
   }).join('');
 }
@@ -609,9 +607,8 @@ function projWealth(startSal, loanAmt, loanRate, monthlyRepay, salGrowth, stateN
   let cumWealth = 0;
   let sal = startSal;
   let lb = loanAmt;
-  let invest = 0;
+  let investPool = 0;
 
-  // unemployment period
   const unempInterest = loanAccrue(lb, loanRate, unempMonths) - lb;
   lb += unempInterest;
   cumWealth -= livingPerMonth * unempMonths;
@@ -624,29 +621,32 @@ function projWealth(startSal, loanAmt, loanRate, monthlyRepay, salGrowth, stateN
         const rep = Math.min(lb, monthlyRepay);
         lb = Math.max(0, lb*(1+loanRate/100/12) - rep);
         cumWealth += monthlyNet - rep;
-        if (lb <= 0) invest = monthlyRepay;
+        if (lb <= 0) investPool = 0;
       } else {
-        invest = invest*(1+INV_RATE) + monthlyRepay;
+        investPool = investPool*(1+INV_RATE) + monthlyRepay;
         cumWealth += monthlyNet;
       }
     }
-    cumWealth += invest;
-    pts.push(Math.round(cumWealth + invest));
+    pts.push(Math.round(cumWealth + investPool));
     sal *= (1+salGrowth);
   }
   return pts;
 }
 
-function destroyChart(id) { if(charts[id]){charts[id].destroy();delete charts[id];} }
+function destroyChart(id) {
+  if (charts[id]) { charts[id].destroy(); delete charts[id]; }
+}
 
 function cOpts(type) {
   return {
     responsive:true, maintainAspectRatio:false,
     plugins:{
       legend:{labels:{color:'#9090a8',font:{family:'Inter',size:11},boxWidth:10,padding:14}},
-      tooltip:{backgroundColor:'#1e1e28',borderColor:'rgba(255,255,255,0.08)',borderWidth:1,
+      tooltip:{
+        backgroundColor:'#1e1e28',borderColor:'rgba(255,255,255,0.08)',borderWidth:1,
         titleColor:'#f0f0f5',bodyColor:'#9090a8',padding:12,
-        callbacks:{label:ctx=>' '+(ctx.dataset.label||'')+': $'+Math.round(ctx.parsed.y).toLocaleString()}}
+        callbacks:{label:ctx=>' '+(ctx.dataset.label||'')+': $'+Math.round(ctx.parsed.y).toLocaleString()}
+      }
     },
     scales:{
       x:{stacked:type==='stacked',ticks:{color:'#5a5a72',font:{family:'Inter',size:11}},grid:{color:'rgba(255,255,255,0.04)'}},
@@ -656,51 +656,50 @@ function cOpts(type) {
 }
 
 function calculate() {
-  const currSal = +document.getElementById('curr_sal').value || 0;
-  const expYrs = +document.getElementById('exp_years').value || 0;
-  const savings = +document.getElementById('savings').value || 0;
-  const contribPct = (+document.getElementById('contrib_pct').value || 30)/100;
-  const salGrowth = (+document.getElementById('sal_growth').value || 8)/100;
-  const stateName = document.getElementById('job_state').value;
+  const currSal     = +document.getElementById('curr_sal').value || 0;
+  const expYrs      = +document.getElementById('exp_years').value || 0;
+  const savings     = +document.getElementById('savings').value || 0;
+  const contribPct  = (+document.getElementById('contrib_pct').value || 30) / 100;
+  const salGrowth   = (+document.getElementById('sal_growth').value || 8) / 100;
+  const stateName   = document.getElementById('job_state').value;
   const unempMonths = +document.getElementById('unemp_months').value || 0;
-  const expBonus = expYrs >= 3 ? 0.07 : expYrs >= 1 ? 0.04 : 0;
+  const expBonus    = expYrs >= 3 ? 0.07 : expYrs >= 1 ? 0.04 : 0;
 
   const res = schools.map((s, idx) => {
-    const durYrs = s.duration_months / 12;
-    const annualCOA = getCOA(s);
-    const totalCOA = annualCOA * durYrs;
-    const oppCost = currSal * durYrs;
-    const totalInv = totalCOA + oppCost;
+    const durYrs     = s.duration_months / 12;
+    const annualCOA  = getCOA(s);
+    const totalCOA   = annualCOA * durYrs;
+    const oppCost    = currSal * durYrs;
+    const totalInv   = totalCOA + oppCost;
 
-    const loanBase = Math.max(0, totalCOA - savings);
-    const loanAmt = s.has_loan ? loanBase * (s.loan_pct/100) : 0;
-    // loan accrues during program
-    const loanAtGrad = loanAccrue(loanAmt, s.loan_rate, s.duration_months);
-    // loan accrues during unemployment too
+    const loanBase      = Math.max(0, totalCOA - savings);
+    const loanAmt       = s.has_loan ? loanBase * (s.loan_pct/100) : 0;
+    const loanAtGrad    = loanAccrue(loanAmt, s.loan_rate, s.duration_months);
     const loanPostUnemp = loanAccrue(loanAtGrad, s.loan_rate, unempMonths);
 
     const avgSal = s.sal_avg * (1+expBonus);
     const minSal = s.sal_min * (1+expBonus);
     const maxSal = s.sal_max * (1+expBonus);
+
     const { takeHome: thAvg } = calcTax(avgSal, stateName);
     const { takeHome: thMin } = calcTax(minSal, stateName);
     const { takeHome: thMax } = calcTax(maxSal, stateName);
-    const monthlyRepay = thAvg/12 * contribPct;
+
+    const monthlyRepayAvg = thAvg/12 * contribPct;
     const monthlyRepayMin = thMin/12 * contribPct;
     const monthlyRepayMax = thMax/12 * contribPct;
 
-    const yRepayAvg = loanPostUnemp > 0 ? calcLoanRepay(loanPostUnemp, monthlyRepay, s) : 0;
+    const yRepayAvg = loanPostUnemp > 0 ? calcLoanRepay(loanPostUnemp, monthlyRepayAvg, s) : 0;
     const yRepayMin = loanPostUnemp > 0 ? calcLoanRepay(loanPostUnemp, monthlyRepayMin, s) : 0;
     const yRepayMax = loanPostUnemp > 0 ? calcLoanRepay(loanPostUnemp, monthlyRepayMax, s) : 0;
 
-    const salGain = avgSal - currSal;
+    const salGain   = avgSal - currSal;
     const breakEven = salGain > 0 ? totalInv/salGain : 999;
-    const roi5 = totalInv > 0 ? Math.round((salGain*5 - totalInv)/totalInv*100) : 0;
+    const roi5      = totalInv > 0 ? Math.round((salGain*5 - totalInv)/totalInv*100) : 0;
 
     const livingPerMonth = annualCOA / 12;
-
-    const proj5 = projWealth(avgSal, loanPostUnemp, s.loan_rate, monthlyRepay, salGrowth, stateName, 5, unempMonths, livingPerMonth);
-    const proj10 = projWealth(avgSal, loanPostUnemp, s.loan_rate, monthlyRepay, salGrowth, stateName, 10, unempMonths, livingPerMonth);
+    const proj5  = projWealth(avgSal, loanPostUnemp, s.loan_rate, monthlyRepayAvg, salGrowth, stateName, 5,  unempMonths, livingPerMonth);
+    const proj10 = projWealth(avgSal, loanPostUnemp, s.loan_rate, monthlyRepayAvg, salGrowth, stateName, 10, unempMonths, livingPerMonth);
 
     return {
       s, idx, color: COLORS[idx],
@@ -708,21 +707,22 @@ function calculate() {
       loanAmt, loanAtGrad, loanPostUnemp,
       avgSal, minSal, maxSal,
       thAvg, thMin, thMax,
-      monthlyRepay: Math.round(monthlyRepay),
+      monthlyRepay: Math.round(monthlyRepayAvg),
       yRepayAvg: Math.round(yRepayAvg*10)/10,
       yRepayMin: Math.round(yRepayMin*10)/10,
       yRepayMax: Math.round(yRepayMax*10)/10,
       salGain, breakEven: Math.round(breakEven*10)/10,
       roi5,
       proj5, proj10,
-      cum5: proj5[5], cum10: proj10[10]
+      cum5:  proj5[5],
+      cum10: proj10[10]
     };
   });
 
-  const bROI = res.reduce((a,b) => a.roi5>b.roi5?a:b);
-  const bRepay = res.reduce((a,b) => (a.yRepayAvg||999)<(b.yRepayAvg||999)?a:b);
-  const bCost = res.reduce((a,b) => a.totalInv<b.totalInv?a:b);
-  const bCum10 = res.reduce((a,b) => a.cum10>b.cum10?a:b);
+  const bROI   = res.reduce((a,b) => a.roi5>b.roi5 ? a : b);
+  const bRepay = res.reduce((a,b) => (a.yRepayAvg||999)<(b.yRepayAvg||999) ? a : b);
+  const bCost  = res.reduce((a,b) => a.totalInv<b.totalInv ? a : b);
+  const bCum10 = res.reduce((a,b) => a.cum10>b.cum10 ? a : b);
 
   document.getElementById('winner-card').innerHTML = `
     <div style="font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:8px;font-weight:600">Best overall ROI</div>
@@ -730,54 +730,53 @@ function calculate() {
     <div style="font-size:15px;color:var(--text2)">
       <span style="color:${bROI.roi5>0?'var(--green)':'var(--red)'};font-weight:600">${bROI.roi5>0?'+':''}${bROI.roi5}% 5-yr ROI</span>
       &nbsp;&bull;&nbsp; ${fmt(bROI.avgSal)} avg. starting salary
-      &nbsp;&bull;&nbsp; ${bROI.loanAmt>0?bROI.yRepayAvg+' yrs to repay':'No loan taken'}
+      &nbsp;&bull;&nbsp; ${bROI.loanAmt>0 ? bROI.yRepayAvg+' yrs to repay' : 'No loan taken'}
     </div>`;
 
   document.getElementById('metrics-row').innerHTML = [
-    {lbl:'Best 5-yr ROI',sch:bROI,val:(bROI.roi5>0?'+':'')+bROI.roi5+'%',cls:bROI.roi5>0?'val-green':'val-red'},
-    {lbl:'Fastest repayment',sch:bRepay,val:bRepay.loanAmt>0?bRepay.yRepayAvg+' yrs':'No loan',cls:'val-green'},
-    {lbl:'Lowest total cost',sch:bCost,val:fmtK(bCost.totalInv),cls:'val-blue'},
-    {lbl:'Highest 10-yr wealth',sch:bCum10,val:fmtK(bCum10.cum10),cls:'val-amber'},
-  ].map(m=>`<div class="metric-card best">
+    {lbl:'Best 5-yr ROI',   sch:bROI,   val:(bROI.roi5>0?'+':'')+bROI.roi5+'%', cls:bROI.roi5>0?'val-green':'val-red'},
+    {lbl:'Fastest repayment',sch:bRepay, val:bRepay.loanAmt>0?bRepay.yRepayAvg+' yrs':'No loan', cls:'val-green'},
+    {lbl:'Lowest total cost',sch:bCost,  val:fmtK(bCost.totalInv), cls:'val-blue'},
+    {lbl:'Highest 10-yr wealth',sch:bCum10,val:fmtK(bCum10.cum10), cls:'val-amber'},
+  ].map(m => `<div class="metric-card best">
     <div class="best-badge">&#9650; best</div>
     <div class="m-label">${m.lbl}</div>
     <div class="m-school">${m.sch.s.name}</div>
     <div class="m-val ${m.cls}">${m.val}</div>
   </div>`).join('');
 
-  // COMPARISON TABLE
-  const tblCols = `<th style="text-align:left;min-width:200px">Metric</th>${res.map(r=>`<th style="color:${r.color}">${r.s.name}</th>`).join('')}`;
+  const tblCols = `<th style="text-align:left;min-width:210px">Metric</th>${res.map(r=>`<th style="color:${r.color}">${r.s.name}</th>`).join('')}`;
   const rows = [
     {sec:'Cost of program'},
-    {lbl:'Annual cost of attendance',fn:r=>fmt(getCOA(r.s)),b:'min'},
-    {lbl:'Total COA (full duration)',fn:r=>fmt(r.totalCOA),b:'min'},
-    {lbl:'Opportunity cost',fn:r=>fmt(r.oppCost),b:'min'},
-    {lbl:'Total investment',fn:r=>fmt(r.totalInv),b:'min'},
-    {lbl:'Loan principal (at start)',fn:r=>r.loanAmt>0?fmt(r.loanAmt):'—',b:'min'},
-    {lbl:'Loan balance at graduation',fn:r=>r.loanAmt>0?fmt(r.loanAtGrad):'—',b:'min'},
-    {lbl:'Loan balance after unemployment',fn:r=>r.loanAmt>0?fmt(r.loanPostUnemp):'—',b:'min'},
+    {lbl:'Annual cost of attendance',              fn:r=>fmt(getCOA(r.s)),       b:'min'},
+    {lbl:'Total COA (full duration)',              fn:r=>fmt(r.totalCOA),         b:'min'},
+    {lbl:'Opportunity cost',                       fn:r=>fmt(r.oppCost),          b:'min'},
+    {lbl:'Total investment',                       fn:r=>fmt(r.totalInv),         b:'min'},
+    {lbl:'Loan principal (at start)',              fn:r=>r.loanAmt>0?fmt(r.loanAmt):'—',       b:'min'},
+    {lbl:'Loan balance at graduation',             fn:r=>r.loanAmt>0?fmt(r.loanAtGrad):'—',   b:'min'},
+    {lbl:'Loan balance after unemployment period', fn:r=>r.loanAmt>0?fmt(r.loanPostUnemp):'—',b:'min'},
     {sec:'Salary outcomes'},
-    {lbl:'Avg. starting salary (adj.)',fn:r=>fmt(r.avgSal),b:'max'},
-    {lbl:'Min / Max starting salary',fn:r=>fmtK(r.minSal)+' – '+fmtK(r.maxSal),b:null},
-    {lbl:'Net take-home (avg salary)',fn:r=>fmt(r.thAvg),b:'max'},
-    {lbl:'Net take-home (min salary)',fn:r=>fmt(r.thMin),b:null},
-    {lbl:'Net take-home (max salary)',fn:r=>fmt(r.thMax),b:null},
-    {lbl:'Monthly repayment capacity',fn:r=>fmt(r.monthlyRepay)+'/mo',b:'max'},
-    {sec:'Loan repayment (avg salary)'},
-    {lbl:'Years to repay (avg salary)',fn:r=>r.loanAmt>0?fmtYr(r.yRepayAvg):'No loan',b:'min'},
-    {lbl:'Years to repay (min salary — worst case)',fn:r=>r.loanAmt>0?fmtYr(r.yRepayMin):'No loan',b:null},
-    {lbl:'Years to repay (max salary — best case)',fn:r=>r.loanAmt>0?fmtYr(r.yRepayMax):'No loan',b:null},
+    {lbl:'Avg. starting salary (exp. adjusted)',   fn:r=>fmt(r.avgSal),  b:'max'},
+    {lbl:'Min / Max starting salary',              fn:r=>fmtK(r.minSal)+' – '+fmtK(r.maxSal), b:null},
+    {lbl:'Net take-home — avg salary',             fn:r=>fmt(r.thAvg),   b:'max'},
+    {lbl:'Net take-home — min salary',             fn:r=>fmt(r.thMin),   b:null},
+    {lbl:'Net take-home — max salary',             fn:r=>fmt(r.thMax),   b:null},
+    {lbl:'Monthly repayment capacity',             fn:r=>fmt(r.monthlyRepay)+'/mo', b:'max'},
+    {sec:'Loan repayment'},
+    {lbl:'Years to repay — avg salary',            fn:r=>r.loanAmt>0?fmtYr(r.yRepayAvg):'No loan', b:'min'},
+    {lbl:'Years to repay — min salary (worst case)',fn:r=>r.loanAmt>0?fmtYr(r.yRepayMin):'No loan', b:null},
+    {lbl:'Years to repay — max salary (best case)', fn:r=>r.loanAmt>0?fmtYr(r.yRepayMax):'No loan', b:null},
     {sec:'ROI analysis'},
-    {lbl:'Salary gain vs. current',fn:r=>r.salGain>=0?'+'+fmt(r.salGain):fmt(r.salGain),b:'max'},
-    {lbl:'Break-even (years)',fn:r=>r.breakEven<50?r.breakEven+' yrs':'N/A',b:'min'},
-    {lbl:'5-year ROI',fn:r=>(r.roi5>=0?'+':'')+r.roi5+'%',b:'max'},
-    {lbl:'5-yr cumulative wealth',fn:r=>fmt(r.cum5),b:'max'},
-    {lbl:'10-yr cumulative wealth',fn:r=>fmt(r.cum10),b:'max'},
+    {lbl:'Salary gain vs. current',                fn:r=>r.salGain>=0?'+'+fmt(r.salGain):fmt(r.salGain), b:'max'},
+    {lbl:'Break-even (years)',                     fn:r=>r.breakEven<50?r.breakEven+' yrs':'N/A', b:'min'},
+    {lbl:'5-year ROI',                             fn:r=>(r.roi5>=0?'+':'')+r.roi5+'%', b:'max'},
+    {lbl:'5-yr cumulative wealth',                 fn:r=>fmt(r.cum5),  b:'max'},
+    {lbl:'10-yr cumulative wealth',                fn:r=>fmt(r.cum10), b:'max'},
   ];
 
   let th = `<thead><tr>${tblCols}</tr></thead><tbody>`;
   rows.forEach(row => {
-    if (row.sec) { th+=`<tr class="section-row"><td colspan="${res.length+1}">${row.sec}</td></tr>`; return; }
+    if (row.sec) { th += `<tr class="section-row"><td colspan="${res.length+1}">${row.sec}</td></tr>`; return; }
     const vals = res.map(r => row.fn(r));
     let best = -1;
     if (row.b) {
@@ -793,73 +792,107 @@ function calculate() {
   th += '</tbody>';
   document.getElementById('compare-table').innerHTML = th;
 
-  // COST CHART
   destroyChart('costChart');
   charts.costChart = new Chart(document.getElementById('costChart'), {
     type:'bar',
-    data:{labels:res.map(r=>r.s.name),datasets:[
-      {label:'Tuition',data:res.map(r=>Math.round(r.s.tuition*(r.s.duration_months/12))),backgroundColor:'#7c6af7'},
-      {label:'Living & food',data:res.map(r=>Math.round(r.s.living*(r.s.duration_months/12))),backgroundColor:'#3b82f6'},
-      {label:'Insurance',data:res.map(r=>Math.round(r.s.insurance*(r.s.duration_months/12))),backgroundColor:'#f59e0b'},
-      {label:'Books & others',data:res.map(r=>Math.round((r.s.books+r.s.others)*(r.s.duration_months/12))),backgroundColor:'#5a5a72'},
-    ]},options:cOpts('stacked')});
+    data:{
+      labels: res.map(r=>r.s.name),
+      datasets:[
+        {label:'Tuition',        data:res.map(r=>Math.round(r.s.tuition   *(r.s.duration_months/12))), backgroundColor:'#7c6af7'},
+        {label:'Living & food',  data:res.map(r=>Math.round(r.s.living    *(r.s.duration_months/12))), backgroundColor:'#3b82f6'},
+        {label:'Insurance',      data:res.map(r=>Math.round(r.s.insurance *(r.s.duration_months/12))), backgroundColor:'#f59e0b'},
+        {label:'Books & others', data:res.map(r=>Math.round((r.s.books+r.s.others)*(r.s.duration_months/12))), backgroundColor:'#5a5a72'},
+      ]
+    },
+    options: cOpts('stacked')
+  });
 
-  // SAL CHART
   destroyChart('salChart');
   charts.salChart = new Chart(document.getElementById('salChart'), {
     type:'bar',
-    data:{labels:res.map(r=>r.s.name),datasets:[
-      {label:'Gross salary',data:res.map(r=>Math.round(r.avgSal)),backgroundColor:'#22c78a'},
-      {label:'Net take-home',data:res.map(r=>Math.round(r.thAvg)),backgroundColor:'#34d399'},
-      {label:'Loan at repayment start',data:res.map(r=>Math.round(r.loanPostUnemp)),backgroundColor:'#ef4444'},
-    ]},options:cOpts('grouped')});
+    data:{
+      labels: res.map(r=>r.s.name),
+      datasets:[
+        {label:'Gross salary',           data:res.map(r=>Math.round(r.avgSal)),        backgroundColor:'#22c78a'},
+        {label:'Net take-home',          data:res.map(r=>Math.round(r.thAvg)),         backgroundColor:'#34d399'},
+        {label:'Loan at repayment start',data:res.map(r=>Math.round(r.loanPostUnemp)), backgroundColor:'#ef4444'},
+      ]
+    },
+    options: cOpts('grouped')
+  });
 
-  // TIMELINE
-  const maxYrs = Math.max(...res.map(r=>r.yRepayAvg||0),1);
+  const maxYrs = Math.max(...res.map(r=>r.yRepayAvg||0), 1);
   document.getElementById('timeline-bars').innerHTML = res.map(r => {
-    if (!r.loanAmt) return `<div class="timeline-item"><div class="timeline-header"><div class="timeline-name">${r.s.name}</div><div class="timeline-val val-green">No loan</div></div><div class="bar-track"><div class="bar-fill" style="width:0%;background:#22c78a"></div></div></div>`;
+    if (!r.loanAmt) return `
+      <div class="timeline-item">
+        <div class="timeline-header">
+          <div class="timeline-name">${r.s.name}</div>
+          <div class="timeline-val val-green">No loan taken</div>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:0%"></div></div>
+      </div>`;
     const pct = Math.min(100, r.yRepayAvg/maxYrs*100);
     const col = r.yRepayAvg<=5?'#22c78a':r.yRepayAvg<=9?'#f59e0b':'#ef4444';
-    const vc = r.yRepayAvg<=5?'val-green':r.yRepayAvg<=9?'val-amber':'val-red';
-    return `<div class="timeline-item">
-      <div class="timeline-header">
-        <div class="timeline-name">${r.s.name}</div>
-        <div class="timeline-val ${vc}">${fmtYr(r.yRepayAvg)} avg &nbsp;|&nbsp; <span style="color:#5a5a72;font-size:12px">${fmtYr(r.yRepayMax)} best — ${fmtYr(r.yRepayMin)} worst</span></div>
-      </div>
-      <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${col}"></div></div>
-    </div>`;
+    const vc  = r.yRepayAvg<=5?'val-green':r.yRepayAvg<=9?'val-amber':'val-red';
+    return `
+      <div class="timeline-item">
+        <div class="timeline-header">
+          <div class="timeline-name">${r.s.name}</div>
+          <div class="timeline-val ${vc}">${fmtYr(r.yRepayAvg)} avg
+            &nbsp;<span style="color:var(--text3);font-size:12px;font-weight:400">
+              | best ${fmtYr(r.yRepayMax)} &mdash; worst ${fmtYr(r.yRepayMin)}
+            </span>
+          </div>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${col}"></div></div>
+      </div>`;
   }).join('');
 
-  const withLoan = res.filter(r=>r.loanAmt>0);
+  const withLoan = res.filter(r => r.loanAmt > 0);
   document.getElementById('repay-note').textContent =
     `Based on ${Math.round(contribPct*100)}% of net monthly take-home toward repayment. ` +
     (withLoan.length > 0
-      ? `Avg repayment range across schools: ${Math.min(...withLoan.map(r=>r.yRepayAvg)).toFixed(1)}–${Math.max(...withLoan.map(r=>r.yRepayAvg)).toFixed(1)} years. ` +
-        `Min/max range (worst to best): ${Math.min(...withLoan.map(r=>r.yRepayMin)).toFixed(1)}–${Math.max(...withLoan.map(r=>r.yRepayMax)).toFixed(1)} years.`
-      : 'No loans taken.');
+      ? `Avg repayment across schools: ${Math.min(...withLoan.map(r=>r.yRepayAvg)).toFixed(1)}–${Math.max(...withLoan.map(r=>r.yRepayAvg)).toFixed(1)} yrs. ` +
+        `Full range (best to worst case): ${Math.min(...withLoan.map(r=>r.yRepayMax)).toFixed(1)}–${Math.max(...withLoan.map(r=>r.yRepayMin)).toFixed(1)} yrs.`
+      : 'No loans taken across all schools.');
 
-  // 5-YR PROJECTION
-  const labels5 = ['Start',...Array.from({length:5},(_,i)=>'Yr '+(i+1))];
+  const labels5  = ['Start', ...Array.from({length:5}, (_,i)=>'Yr '+(i+1))];
+  const labels10 = ['Start', ...Array.from({length:10},(_,i)=>'Yr '+(i+1))];
+
   destroyChart('projChart5');
   charts.projChart5 = new Chart(document.getElementById('projChart5'), {
     type:'line',
-    data:{labels:labels5,datasets:res.map(r=>({label:r.s.name,data:r.proj5,borderColor:r.color,backgroundColor:'transparent',borderWidth:2.5,pointRadius:4,tension:0.4}))},
-    options:cOpts('line')});
+    data:{
+      labels: labels5,
+      datasets: res.map(r => ({
+        label: r.s.name, data: r.proj5,
+        borderColor: r.color, backgroundColor:'transparent',
+        borderWidth:2.5, pointRadius:4, tension:0.4
+      }))
+    },
+    options: cOpts('line')
+  });
   document.getElementById('proj-note5').textContent =
-    `5-year cumulative wealth after tax, living costs during unemployment, and loan repayment. Once loan is paid off, that repayment amount flows into an index fund growing at 8%/yr (S&P 500 long-run avg). Salary grows at ${Math.round(salGrowth*100)}%/yr.`;
+    `5-year cumulative wealth after tax, unemployment living costs, and loan repayment. Once loan is repaid, that monthly amount flows into an index fund at 8%/yr. Salary grows at ${Math.round(salGrowth*100)}%/yr.`;
 
-  // 10-YR PROJECTION
-  const labels10 = ['Start',...Array.from({length:10},(_,i)=>'Yr '+(i+1))];
   destroyChart('projChart10');
   charts.projChart10 = new Chart(document.getElementById('projChart10'), {
     type:'line',
-    data:{labels:labels10,datasets:res.map(r=>({label:r.s.name,data:r.proj10,borderColor:r.color,backgroundColor:'transparent',borderWidth:2.5,pointRadius:4,tension:0.4}))},
-    options:cOpts('line')});
+    data:{
+      labels: labels10,
+      datasets: res.map(r => ({
+        label: r.s.name, data: r.proj10,
+        borderColor: r.color, backgroundColor:'transparent',
+        borderWidth:2.5, pointRadius:4, tension:0.4
+      }))
+    },
+    options: cOpts('line')
+  });
   document.getElementById('proj-note10').textContent =
-    `10-year projection with same assumptions. The compounding effect of investment after loan payoff becomes clearly visible at this horizon.`;
+    `10-year projection with same assumptions. Compounding investment growth after loan payoff becomes clearly visible at this horizon — often the decisive factor between two similar programs.`;
 
   document.getElementById('results').style.display = 'block';
-  document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+  document.getElementById('results').scrollIntoView({behavior:'smooth', block:'start'});
 }
 
 addSchool('School 1');
